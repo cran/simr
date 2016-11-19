@@ -5,27 +5,29 @@ original <- simrOptions()
 
 test_that("getting options works", {
 
-  expect_identical(getSimrOption("nsim"), test.nsim)
+  expect_identical(getSimrOption("nsim"), 10)
 
   expect_is(simrOptions(), "list")
   expect_named(simrOptions())
 
-  expect_identical(simrOptions("nsim", "progress"), list(nsim=test.nsim, progress=test.progress))
-  expect_identical(simrOptions(c("nsim", "progress")), list(nsim=test.nsim, progress=test.progress))
-  expect_identical(simrOptions(list("nsim", "progress")), list(nsim=test.nsim, progress=test.progress))
+  expect_identical(simrOptions("nsim", "progress"), list(nsim=10, progress=FALSE))
+  expect_identical(simrOptions(c("nsim", "progress")), list(nsim=10, progress=FALSE))
+  expect_identical(simrOptions(list("nsim", "progress")), list(nsim=10, progress=FALSE))
 })
 
 test_that("setting options works", {
 
   newopts <- list(nsim=9, binom="logit")
 
-  expect_that(simrOptions(), not(is_identical_to(newopts)))
+  # pass as list
+  expect_false(identical(simrOptions(names(newopts)), newopts))
   oldopts <- simrOptions(newopts)
   expect_identical(simrOptions(names(newopts)), newopts)
 
   simrOptions(oldopts)
 
-  expect_that(simrOptions(), not(is_identical_to(newopts)))
+  # pass as multiple arguments
+  expect_false(identical(simrOptions(names(newopts)), newopts))
   oldopts <- do.call(simrOptions, newopts)
   expect_identical(simrOptions(names(newopts)), newopts)
 })

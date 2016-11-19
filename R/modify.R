@@ -131,7 +131,7 @@ calcTheta <- function(V, sigma) {
     useSc <- object@devcomp$dims[["useSc"]]
     REML <- object@devcomp$dims[["REML"]]
 
-    if(!useSc) stop("sigma is not applicable for this model.")
+    if(!useSc && !identical(value, 1)) stop("sigma is not applicable for this model.")
 
     V <- VarCorr(object)
 
@@ -200,9 +200,15 @@ simrTag <- function(object) {
 
 observedPowerWarning <- function(sim) {
 
-    if(!simrTag(sim) && !is.function(sim) && getSimrOption("observedPowerWarning")) {
+    if(simrTag(sim)) return(FALSE)
 
-        warning("This appears to be an \"observed power\" calculation")
-        TRUE
-    } else FALSE
+    if(is.function(sim)) return(FALSE)
+
+    if(is(sim, "iter")) return(FALSE)
+
+    if(!getSimrOption("observedPowerWarning")) return(FALSE)
+
+    warning("This appears to be an \"observed power\" calculation")
+
+    return(TRUE)
 }

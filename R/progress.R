@@ -15,7 +15,7 @@ progress_simr <- function (text="", ...) {
             .simrCounter $ Np <- N
             .simrCounter $ text <- text
 
-            set(1)
+            set(0)
         },
 
         step = function() {
@@ -97,6 +97,13 @@ updateProgress <- function() {
     newcounter <- str_c(counter, progress)
 
     # print
+
+    if(!exists("oldcounter", sc)) {
+
+        maybecat(newcounter)
+        flush.console()
+    }
+
     if(exists("oldcounter", sc) && newcounter != sc$oldcounter) {
 
         maybecat(str_dup("\b", str_length(sc$oldcounter)))
@@ -116,4 +123,3 @@ done <- function() {
 
     rm(list=ls(.simrCounter), envir=.simrCounter)
 }
-

@@ -30,6 +30,8 @@
 #' plot(pc2)
 #' }
 #'
+#' @seealso \code{\link{print.powerCurve}}, \code{\link{summary.powerCurve}}, \code{\link{confint.powerCurve}}
+#'
 #' @export
 powerCurve <- function(
 
@@ -55,7 +57,7 @@ powerCurve <- function(
     on.exit(simrOptions(opts))
 
     # START TIMING
-    timing <- system.time({
+    start <- proc.time()
 
     nsim <- getSimrOption("nsim")
     if(!missing(seed)) set.seed(seed)
@@ -124,6 +126,9 @@ powerCurve <- function(
 
     psList <- maybe_llply(ss_list, psF, .progress=counter_simr(), .text="powerCurve", .extract=TRUE)
 
+    # END TIMING
+    timing <- proc.time() - start
+
     z <- list(
         ps = psList$value,
         alpha = getSimrOption("alpha"),
@@ -134,61 +139,24 @@ powerCurve <- function(
         nlevels = breaks,
         simrTag = observedPowerWarning(sim),
         xlab = xlab,
-        xval = xval
+        xval = xval,
+        timing = timing
     )
 
     rval <- structure(z, class="powerCurve")
-
-    })
-    # END TIMING
-
-    rval $ timing <- timing
 
     .simrLastResult $ lastResult <- rval
 
     return(rval)
 }
 
-#' @export
-print.powerCurve <- function(x, ...) {
-
-  cat(x$text)
-  cat(", (95% confidence interval),\n")
-
-  #l_ply(x$pa, function(x) {printerval(x);cat("\n")})
-  cat("by ", x$xlab, ":\n", sep="")
-  for(i in seq_along(x$ps)) {
-
-    cat(sprintf("%7i: ", x$xval[i]))
-    printerval(x$ps[[i]], ...)
-    cat(" -", x$ps[[i]]$nrow, "rows")
-    cat("\n")
-  }
-
-  time <- x$timing['elapsed']
-  cat(sprintf("\nTime elapsed: %i h %i m %i s\n", floor(time/60/60), floor(time/60) %% 60, floor(time) %% 60))
-}
-
-timed <- function(f, mode=c("attribute", "list")) {
-
-  mode <- match.arg(mode)
-
-  function(...) {
-
-    timing <- system.time(rval <- eval.parent(substitute(f(...))), gcFirst=TRUE)
-
-    if(mode == "list") rval$timing <- timing
-    if(mode == "attribute") attr(rval, "timing") <- timing
-
-    return(rval)
-  }
-}
-
 #
 # Function to calculate tidy subset breaks
 #
 
-tidySeq <- function(from, to, maxLength) {
+tidySeq <- function(from=getSimrOption("pcmin"), to, maxLength=getSimrOption("pcmax")) {
+
+    if(to < from) return(to)
 
     if(to - from + 1 <= maxLength) return(seq(from, to))
 

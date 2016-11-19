@@ -47,7 +47,7 @@ getData <- function(object) {
     # @nd choice: doFit inserts a whole data.frame into the call
     #
 
-    dataCall <- getCall(object)$data
+    dataCall <- maybe(getCall)(object)$value$data
     if(is(dataCall, "data.frame")) return(dataCall)
 
     #
@@ -55,9 +55,7 @@ getData <- function(object) {
     #
 
     #dataName <- as.character(dataCall)
-    E <- environment(formula(object))
-
-    if(length(dataCall) > 0) return(eval(dataCall, envir=E))
+    if(length(dataCall) > 0) return(eval(dataCall, envir=environment(formula(object))))
 
     #
     # If none of the above worked:
@@ -68,8 +66,33 @@ getData <- function(object) {
 
 #' @rdname getData
 #' @export
-`getData<-` <- function(object, value) {
+`getData<-` <- function(object, value) UseMethod("getData<-", object)
+
+#' @export
+`getData<-.default` <- function(object, value) {
 
     attr(object, "newData") <- value
     return(object)
+}
+
+#' @export
+`getData<-.lm` <- function(object, value) {
+
+    newData <- value
+
+    newCall <- getCall(object)
+    newCall$data <- quote(newData)
+
+    newObject <- eval(newCall)
+
+    # beta and sigma
+    coef(newObject) <- coef(object)
+    suppressWarnings(
+        sigma(newObject) <- sigma(object)
+    ) # In summary.lm(object) : essentially perfect fit: summary may be unreliable
+
+    # less likely to have problems if the data's kept here?
+    # attr(newObject, 'newData') <- newData
+
+    return(newObject)
 }

@@ -15,11 +15,12 @@
 #'   \item{\code{nsim}:}{the number of simulations to run (default is \code{1000}).}
 #'   \item{\code{alpha}:}{the significance level for the statistical test (default is \code{0.05}).}
 #'   \item{\code{progress}:}{use progress bars during calculations (default is \code{TRUE}).}
-#'   }#'
+#'   }
 #' @examples
 #' fm1 <- lmer(y ~ x + (1|g), data=simdata)
 #' powerSim(fm1, nsim=10)
 #'
+#' @seealso \code{\link{print.powerSim}}, \code{\link{summary.powerSim}}, \code{\link{confint.powerSim}}
 #' @export
 powerSim <- function(
 
@@ -49,15 +50,6 @@ powerSim <- function(
 
     # setup
     if(!missing(seed)) set.seed(seed)
-    #this.frame <- getFrame(fit)
-
-    #test(fit) # throw any errors now
-
-    # generate the simulations
-    #simulations <- maybe_rlply(nsim, doSim(sim), .text="Simulating")
-
-    # fit the model to the simulations
-    #z <- maybe_llply(simulations, doFit, fit, .text="Fitting", ...)
 
     # summarise the fitted models
     test <- wrapTest(test)
@@ -83,16 +75,13 @@ powerSim <- function(
 
     p <- maybe_raply(nsim, f(), .text="Simulating")
 
-    success <- sum(p$value < alpha, na.rm=TRUE)
-    trials <- sum(!is.na(p$value))
-
     # END TIMING
     timing <- proc.time() - start
 
     # structure the return value
     rval <- list()
 
-    rval $ x <- success
+    rval $ x <- sum(p$value < alpha, na.rm=TRUE)
     rval $ n <- nsim
 
     #rval $ xname <- xname
@@ -117,39 +106,6 @@ powerSim <- function(
     .simrLastResult $ lastResult <- rval
 
     return(rval)
-}
-
-#' @export
-print.powerSim <- function(x, ...) {
-
-    cat(x$text)
-    cat(", (95% confidence interval):\n")
-    printerval(x, ...)
-    cat("\n\n")
-
-    pad <- "Test: "
-    for(text in x$description) {
-        cat(pad); pad <- "      "
-        cat(text)
-        cat("\n")
-    }
-    cat("\n")
-
-    #cat(sprintf("Based on %i simulations and effect size %.2f", z$n, z$effect))
-    cat(sprintf("Based on %i simulations, ", x$n))
-    wn <- length(unique(x$warnings$index)) ; en <- length(unique(x$errors$index))
-    wstr <- str_c(wn, " ", if(wn==1) "warning" else "warnings")
-    estr <- str_c(en, " ", if(en==1) "error" else "errors")
-    cat(str_c("(", wstr, ", ", estr, ")"))
-    cat("\n")
-
-    cat("alpha = ", x$alpha, ", nrow = ", x$nrow, sep="")
-    cat("\n")
-
-    time <- x$timing['elapsed']
-    cat(sprintf("\nTime elapsed: %i h %i m %i s\n", floor(time/60/60), floor(time/60) %% 60, floor(time) %% 60))
-
-    if(x$simrTag) cat("\nnb: result might be an observed power calculation\n")
 }
 
 #' @export

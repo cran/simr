@@ -33,7 +33,7 @@ maybe <- function(f) {
 
         returnValue <- tryCatch(
 
-            withCallingHandlers(eval.parent(f(...)),
+            withCallingHandlers(f(...),
 
                 warning=function(w) {
 
@@ -161,14 +161,14 @@ maybe_laply <- function(...) {
     return(rval)
 }
 
-maybe_rlply <- function(.N, .thing, ...) {
-
-    maybe_llply(seq_len(.N), eval.parent(substitute(function(.) .thing)), ...)
-}
-
 maybe_raply <- function(.N, .thing, ...) {
 
     maybe_laply(seq_len(.N), eval.parent(substitute(function(.) .thing)), ...)
+}
+
+maybe_rlply <- function(.N, .thing, ...) {
+
+    maybe_llply(seq_len(.N), eval.parent(substitute(function(.) .thing)), ...)
 }
 
 sometimes <- function(x, p=0.01, emsg="x8x", pw=NA, wmsg="boo!", lambda=NA) {
