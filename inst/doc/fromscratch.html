@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -75,12 +75,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="covariates-and-parameters" class="section level3">
 <h3>Covariates and parameters</h3>
 <p>First set up some covariates with <code>expand.grid</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>:<span class="dv">10</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)
 g &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>)
 
 X &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">x=</span>x, <span class="dt">g=</span>g)</code></pre></div>
 <p>Specify some fixed and random parameters.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, -<span class="fl">0.1</span>) <span class="co"># fixed intercept and slope</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="op">-</span><span class="fl">0.1</span>) <span class="co"># fixed intercept and slope</span>
 V1 &lt;-<span class="st"> </span><span class="fl">0.5</span> <span class="co"># random intercept variance</span>
 V2 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="fl">0.5</span>,<span class="fl">0.05</span>,<span class="fl">0.05</span>,<span class="fl">0.1</span>), <span class="dv">2</span>) <span class="co"># random intercept and slope variance-covariance matrix</span>
 s &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># residual variance</span></code></pre></div>
@@ -88,7 +88,7 @@ s &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># res
 <div id="build-a-model-object" class="section level3">
 <h3>Build a model object</h3>
 <p>Use the <code>makeLmer</code> or <code>makeGlmer</code> function to build an artificial <code>lme4</code> object.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model1 &lt;-<span class="st"> </span><span class="kw">makeLmer</span>(y ~<span class="st"> </span>x +<span class="st"> </span>(<span class="dv">1</span>|g), <span class="dt">fixef=</span>b, <span class="dt">VarCorr=</span>V1, <span class="dt">sigma=</span>s, <span class="dt">data=</span>X)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model1 &lt;-<span class="st"> </span><span class="kw">makeLmer</span>(y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>g), <span class="dt">fixef=</span>b, <span class="dt">VarCorr=</span>V1, <span class="dt">sigma=</span>s, <span class="dt">data=</span>X)
 <span class="kw">print</span>(model1)</code></pre></div>
 <pre><code>## Linear mixed model fit by REML ['lmerMod']
 ## Formula: y ~ x + (1 | g)
@@ -102,7 +102,7 @@ s &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># res
 ## Fixed Effects:
 ## (Intercept)            x  
 ##         2.0         -0.1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model2 &lt;-<span class="st"> </span><span class="kw">makeGlmer</span>(z ~<span class="st"> </span>x +<span class="st"> </span>(x|g), <span class="dt">family=</span><span class="st">&quot;poisson&quot;</span>, <span class="dt">fixef=</span>b, <span class="dt">VarCorr=</span>V2, <span class="dt">data=</span>X)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model2 &lt;-<span class="st"> </span><span class="kw">makeGlmer</span>(z <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>(x<span class="op">|</span>g), <span class="dt">family=</span><span class="st">&quot;poisson&quot;</span>, <span class="dt">fixef=</span>b, <span class="dt">VarCorr=</span>V2, <span class="dt">data=</span>X)
 <span class="kw">print</span>(model2)</code></pre></div>
 <pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
 ##   Approximation) [glmerMod]
@@ -133,7 +133,7 @@ s &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># res
 ## Based on 20 simulations, (0 warnings, 0 errors)
 ## alpha = 0.05, nrow = 30
 ## 
-## Time elapsed: 0 h 0 m 5 s</code></pre>
+## Time elapsed: 0 h 0 m 3 s</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">powerSim</span>(model2, <span class="dt">nsim=</span><span class="dv">20</span>)</code></pre></div>
 <pre><code>## Power for predictor 'x', (95% confidence interval):
 ##       35.00% (15.39, 59.22)
@@ -144,7 +144,7 @@ s &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># res
 ## Based on 20 simulations, (2 warnings, 0 errors)
 ## alpha = 0.05, nrow = 30
 ## 
-## Time elapsed: 0 h 0 m 5 s</code></pre>
+## Time elapsed: 0 h 0 m 4 s</code></pre>
 </div>
 
 
@@ -154,7 +154,7 @@ s &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># res
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

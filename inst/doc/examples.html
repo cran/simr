@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -76,10 +76,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="binomial-glmm-with-a-categorical-predictor" class="section level2">
 <h2>Binomial GLMM with a categorical predictor</h2>
 <p>The first example comes from the help page for <code>glmer</code>. The data frame <code>cbpp</code> contains data on contagious bovine pleuropneumonia. An observation variable is added to allow for overdispersion. Note that the response is specified using <code>cbind</code> — <code>simr</code> expects a binomial model to be in this form.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cbpp$obs &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="kw">nrow</span>(cbpp)
-gm1 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw">cbind</span>(incidence, size -<span class="st"> </span>incidence) ~<span class="st"> </span>period +<span class="st"> </span>(<span class="dv">1</span> |<span class="st"> </span>herd) +<span class="st"> </span>(<span class="dv">1</span>|obs), <span class="dt">data=</span>cbpp,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cbpp<span class="op">$</span>obs &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(cbpp)
+gm1 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw">cbind</span>(incidence, size <span class="op">-</span><span class="st"> </span>incidence) <span class="op">~</span><span class="st"> </span>period <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>herd) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>obs), <span class="dt">data=</span>cbpp,
     <span class="dt">family=</span>binomial)
-<span class="kw">summary</span>(gm1)$coef</code></pre></div>
+<span class="kw">summary</span>(gm1)<span class="op">$</span>coef</code></pre></div>
 <pre><code>##              Estimate Std. Error   z value     Pr(&gt;|z|)
 ## (Intercept) -1.500290  0.2967076 -5.056460 4.271108e-07
 ## period2     -1.226498  0.4802941 -2.553640 1.066033e-02
@@ -97,7 +97,7 @@ gm1 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw"
 ## Test: z-test
 ##       Effect size for period2 is -1.2</code></pre>
 <p>Suppose your model also has a continuous predictor. You can use <code>fixed</code> to choose which fixed effect to apply tests to.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gm2 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw">cbind</span>(incidence, size -<span class="st"> </span>incidence) ~<span class="st"> </span>period +<span class="st"> </span>size +<span class="st"> </span>(<span class="dv">1</span> |<span class="st"> </span>herd), <span class="dt">data=</span>cbpp,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gm2 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw">cbind</span>(incidence, size <span class="op">-</span><span class="st"> </span>incidence) <span class="op">~</span><span class="st"> </span>period <span class="op">+</span><span class="st"> </span>size <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>herd), <span class="dt">data=</span>cbpp,
     <span class="dt">family=</span>binomial)
 <span class="kw">doTest</span>(gm2, <span class="kw">fixed</span>(<span class="st">&quot;size&quot;</span>, <span class="st">&quot;z&quot;</span>))</code></pre></div>
 <pre><code>## p-value for predictor 'size': 0.8633872
@@ -108,12 +108,12 @@ gm1 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw"
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fixef</span>(gm2)[<span class="st">&quot;size&quot;</span>] &lt;-<span class="st"> </span><span class="fl">0.05</span>
 <span class="kw">powerSim</span>(gm2, <span class="kw">fixed</span>(<span class="st">&quot;size&quot;</span>, <span class="st">&quot;z&quot;</span>), <span class="dt">nsim=</span><span class="dv">50</span>)</code></pre></div>
 <pre><code>## Power for predictor 'size', (95% confidence interval):
-##       10.00% ( 3.33, 21.81)
+##       14.00% ( 5.82, 26.74)
 ## 
 ## Test: z-test
 ##       Effect size for size is 0.050
 ## 
-## Based on 50 simulations, (16 warnings, 0 errors)
+## Based on 50 simulations, (22 warnings, 0 errors)
 ## alpha = 0.05, nrow = 56
 ## 
 ## Time elapsed: 0 h 0 m 15 s</code></pre>
@@ -124,23 +124,23 @@ gm1 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw"
 <div id="cake" class="section level3">
 <h3>Cake</h3>
 <p>This example uses the <code>cake</code> dataset.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fm1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(angle ~<span class="st"> </span>recipe *<span class="st"> </span>temp +<span class="st"> </span>(<span class="dv">1</span>|recipe:replicate), <span class="dt">data=</span>cake, <span class="dt">REML=</span><span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fm1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(angle <span class="op">~</span><span class="st"> </span>recipe <span class="op">*</span><span class="st"> </span>temp <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>recipe<span class="op">:</span>replicate), <span class="dt">data=</span>cake, <span class="dt">REML=</span><span class="ot">FALSE</span>)</code></pre></div>
 <p>Main effects should not be tested when they appear in an interaction term. Using the <code>fcompare</code> function, we can specify a comparison with a simpler model (without having to re-type the random effects specification).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm1, <span class="kw">fcompare</span>(~<span class="st"> </span>recipe +<span class="st"> </span>temp))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm1, <span class="kw">fcompare</span>(<span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span>temp))</code></pre></div>
 <pre><code>## p-value for model comparison: 0.9586321
 ##           --------------------
 ## Test: Likelihood ratio
 ##       Comparison to ~recipe + temp + [re]</code></pre>
 <p>This also works for polynomial terms:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fm2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(angle ~<span class="st"> </span>recipe +<span class="st"> </span><span class="kw">poly</span>(temp, <span class="dv">2</span>) +<span class="st"> </span>(<span class="dv">1</span>|recipe:replicate), <span class="dt">data=</span>cake, <span class="dt">REML=</span><span class="ot">FALSE</span>)
-<span class="kw">summary</span>(fm2)$coef</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fm2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(angle <span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span><span class="kw">poly</span>(temp, <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>recipe<span class="op">:</span>replicate), <span class="dt">data=</span>cake, <span class="dt">REML=</span><span class="ot">FALSE</span>)
+<span class="kw">summary</span>(fm2)<span class="op">$</span>coef</code></pre></div>
 <pre><code>##                 Estimate Std. Error    t value
 ## (Intercept)    33.122222   1.677940 19.7398077
 ## recipeB        -1.477778   2.372966 -0.6227555
 ## recipeC        -1.522222   2.372966 -0.6414850
 ## poly(temp, 2)1 44.347549   4.537142  9.7743351
 ## poly(temp, 2)2 -2.586135   4.537142 -0.5699921</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm2, <span class="kw">fcompare</span>(~<span class="st"> </span>recipe +<span class="st"> </span>temp))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm2, <span class="kw">fcompare</span>(<span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span>temp))</code></pre></div>
 <pre><code>## p-value for model comparison: 0.5688225
 ##           --------------------
 ## Test: Likelihood ratio
@@ -150,15 +150,15 @@ gm1 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw"
 <h3>Budworms</h3>
 <p>We can do similar things with the <code>budworm</code> data in the <code>pbkrtest</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(budworm, <span class="dt">package=</span><span class="st">&quot;pbkrtest&quot;</span>)
-bw1 &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="kw">cbind</span>(ndead, ntotal-ndead) ~<span class="st"> </span>dose*sex, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="dt">data=</span>budworm)
-<span class="kw">summary</span>(bw1)$coef</code></pre></div>
+bw1 &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="kw">cbind</span>(ndead, ntotal<span class="op">-</span>ndead) <span class="op">~</span><span class="st"> </span>dose<span class="op">*</span>sex, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="dt">data=</span>budworm)
+<span class="kw">summary</span>(bw1)<span class="op">$</span>coef</code></pre></div>
 <pre><code>##                Estimate Std. Error    z value     Pr(&gt;|z|)
 ## (Intercept)  -1.7157796 0.32233098 -5.3230368 1.020491e-07
 ## dose          0.1156765 0.02378865  4.8626745 1.158102e-06
 ## sexmale      -0.2119351 0.51523286 -0.4113384 6.808244e-01
 ## dose:sexmale  0.1815579 0.06691613  2.7132151 6.663383e-03</code></pre>
 <p>Of course we don’t want to retype the <code>cbind</code> boilerplate:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(bw1, <span class="kw">compare</span>(. ~<span class="st"> </span>dose +<span class="st"> </span>sex))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(bw1, <span class="kw">compare</span>(. <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>sex))</code></pre></div>
 <pre><code>## p-value for model comparison: 0.001741539
 ##           --------------------
 ## Test: Likelihood ratio
@@ -174,33 +174,33 @@ bw1 &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="kw">c
 <div id="single-random-effects" class="section level2">
 <h2>Single random effects</h2>
 <p>The <code>random</code> function gives you access to tests from the <code>RLRsim</code> package. No additional arguments are needed for a single random effect.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">re1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Yield ~<span class="st"> </span><span class="dv">1</span>|Batch, <span class="dt">data=</span>Dyestuff)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">re1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Yield <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>Batch, <span class="dt">data=</span>Dyestuff)
 <span class="kw">doTest</span>(re1, <span class="kw">random</span>())</code></pre></div>
-<pre><code>## p-value for a single random effect: 0.0047
+<pre><code>## p-value for a single random effect: 0.0048
 ##           --------------------
 ## Test: Exact restricted LRT (package RLRsim)</code></pre>
 </div>
 <div id="multiple-random-effects" class="section level2">
 <h2>Multiple random effects</h2>
 <p>Where the model has multiple random effects, <code>compare</code> can be used to test alternative specifications.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fm1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Reaction ~<span class="st"> </span>Days +<span class="st"> </span>(Days |<span class="st"> </span>Subject), <span class="dt">data=</span>sleepstudy)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm1, <span class="kw">compare</span>( ~<span class="st"> </span>Days +<span class="st"> </span>(<span class="dv">1</span> |<span class="st"> </span>Subject)))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fm1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(Days <span class="op">|</span><span class="st"> </span>Subject), <span class="dt">data=</span>sleepstudy)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm1, <span class="kw">compare</span>( <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject)))</code></pre></div>
 <pre><code>## p-value for model comparison: 7.072413e-10
 ##           --------------------
 ## Test: Likelihood ratio
 ##       Comparison to ~Days + (1 | Subject)</code></pre>
 <p>The LRT is fast but only approximate. In fact, when testing random effects, the test is conservative<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> because the null hypothesis is at a boundary of the parameter space. This means that you will underestimate power if you use the LRT. For more accurate results you can use <code>compare</code> with a parametric bootstrap test from the <code>pbkrtest</code> package. These can be quite slow, so you may want to use the LRT to exploring designs, and then double check with the parametric bootstrap.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm1, <span class="kw">compare</span>( ~<span class="st"> </span>Days +<span class="st"> </span>(<span class="dv">1</span> |<span class="st"> </span>Subject), <span class="st">&quot;pb&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm1, <span class="kw">compare</span>( <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject), <span class="st">&quot;pb&quot;</span>))</code></pre></div>
 <p>Note that the shortcut <code>rcompare</code> saves you from retyping the fixed effect specification.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm1, <span class="kw">rcompare</span>( ~<span class="st"> </span>(<span class="dv">1</span> |<span class="st"> </span>Subject), <span class="st">&quot;pb&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm1, <span class="kw">rcompare</span>( <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject), <span class="st">&quot;pb&quot;</span>))</code></pre></div>
 </div>
 <div id="a-note-about-errors-during-simulation" class="section level2">
 <h2>A note about errors during simulation</h2>
 <p>During a simulation study, some iterations may fail due to some sort of error. When this happens, <code>simr</code> treats that iteration as a failed (i.e. not significant) test. In the following example there are 50 simulations, with 14 successes, 34 failures, and 2 non-results. The power is calculated as 14/50, i.e. 28%:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binFit &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> <span class="kw">cbind</span>(z, <span class="dv">10</span> -<span class="st"> </span>z) ~<span class="st"> </span>x +<span class="st"> </span>g, <span class="dt">family =</span> binomial, <span class="dt">data =</span> simdata)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binFit &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> <span class="kw">cbind</span>(z, <span class="dv">10</span> <span class="op">-</span><span class="st"> </span>z) <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>g, <span class="dt">family =</span> binomial, <span class="dt">data =</span> simdata)
 
-poisSim &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> z ~<span class="st"> </span>x +<span class="st"> </span>g, <span class="dt">family =</span> poisson, <span class="dt">data =</span> simdata)
-<span class="kw">coef</span>(poisSim)[<span class="dv">1</span>:<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, -<span class="fl">0.05</span>)
+poisSim &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> z <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>g, <span class="dt">family =</span> poisson, <span class="dt">data =</span> simdata)
+<span class="kw">coef</span>(poisSim)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="op">-</span><span class="fl">0.05</span>)
 
 <span class="kw">powerSim</span>(binFit, <span class="dt">sim=</span>poisSim, <span class="dt">nsim=</span><span class="dv">50</span>, <span class="dt">seed=</span><span class="dv">1</span>)</code></pre></div>
 <pre><code>## Power for predictor 'x', (95% confidence interval):
@@ -215,7 +215,7 @@ poisSim &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="d
 ## Time elapsed: 0 h 0 m 0 s</code></pre>
 <p>Rather than interrupting part-way through an analysis, <code>simr</code> traps and logs errors and warnings. You can access these logs using <code>$warnings</code> and <code>$errors</code>. If you didn’t assign your analysis to a variable, you can recover it with the <code>lastResult</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps &lt;-<span class="st"> </span><span class="kw">lastResult</span>()
-ps$errors</code></pre></div>
+ps<span class="op">$</span>errors</code></pre></div>
 <pre><code>##     stage index                           message
 ## 1 Fitting    14 Value 1.04545 out of range (0, 1)
 ## 2 Fitting    33 Value 1.13636 out of range (0, 1)</code></pre>
@@ -234,7 +234,7 @@ ps$errors</code></pre></div>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
