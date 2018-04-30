@@ -18,46 +18,256 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
 
-<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 </head>
 
@@ -72,51 +282,51 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <p>This vignette provides examples of some of the hypothesis tests that can be specified in <code>simr</code>. The function <code>doTest</code> can be used to apply a test to an input model, which lets you check that the test works before running a power simulation.</p>
 <p>Documentation for the test specification functions can be found in the help system at <code>?tests</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(simr)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(simr)</a></code></pre></div>
 <div id="binomial-glmm-with-a-categorical-predictor" class="section level2">
 <h2>Binomial GLMM with a categorical predictor</h2>
 <p>The first example comes from the help page for <code>glmer</code>. The data frame <code>cbpp</code> contains data on contagious bovine pleuropneumonia. An observation variable is added to allow for overdispersion. Note that the response is specified using <code>cbind</code> — <code>simr</code> expects a binomial model to be in this form.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cbpp<span class="op">$</span>obs &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(cbpp)
-gm1 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw">cbind</span>(incidence, size <span class="op">-</span><span class="st"> </span>incidence) <span class="op">~</span><span class="st"> </span>period <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>herd) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>obs), <span class="dt">data=</span>cbpp,
-    <span class="dt">family=</span>binomial)
-<span class="kw">summary</span>(gm1)<span class="op">$</span>coef</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">cbpp<span class="op">$</span>obs &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(cbpp)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">gm1 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw">cbind</span>(incidence, size <span class="op">-</span><span class="st"> </span>incidence) <span class="op">~</span><span class="st"> </span>period <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>herd) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>obs), <span class="dt">data=</span>cbpp,</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="dt">family=</span>binomial)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">summary</span>(gm1)<span class="op">$</span>coef</a></code></pre></div>
 <pre><code>##              Estimate Std. Error   z value     Pr(&gt;|z|)
 ## (Intercept) -1.500290  0.2967076 -5.056460 4.271108e-07
 ## period2     -1.226498  0.4802941 -2.553640 1.066033e-02
 ## period3     -1.328831  0.4938985 -2.690495 7.134610e-03
 ## period4     -1.866248  0.5935804 -3.144052 1.666258e-03</code></pre>
 <p>Note that <code>period</code> is a categorical variable with 4 levels, which enters the model as 3 dummy variables. To test all 3 dummy variables simultaneously, you can use a likelihood ratio test.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(gm1, <span class="kw">fixed</span>(<span class="st">&quot;period&quot;</span>, <span class="st">&quot;lr&quot;</span>))</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">doTest</span>(gm1, <span class="kw">fixed</span>(<span class="st">&quot;period&quot;</span>, <span class="st">&quot;lr&quot;</span>))</a></code></pre></div>
 <pre><code>## p-value for predictor 'period': 0.003150249
 ##           --------------------
 ## Test: Likelihood ratio</code></pre>
 <p>If you were (for some reason) especially interested in the significance for the dummy variable <code>period2</code> you could use a z-test. This test uses the value <code>Pr(&gt;|z|)</code> reported in the summary above.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(gm1, <span class="kw">fixed</span>(<span class="st">&quot;period2&quot;</span>, <span class="st">&quot;z&quot;</span>))</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">doTest</span>(gm1, <span class="kw">fixed</span>(<span class="st">&quot;period2&quot;</span>, <span class="st">&quot;z&quot;</span>))</a></code></pre></div>
 <pre><code>## p-value for predictor 'period2': 0.01066033
 ##           --------------------
 ## Test: z-test
 ##       Effect size for period2 is -1.2</code></pre>
 <p>Suppose your model also has a continuous predictor. You can use <code>fixed</code> to choose which fixed effect to apply tests to.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gm2 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw">cbind</span>(incidence, size <span class="op">-</span><span class="st"> </span>incidence) <span class="op">~</span><span class="st"> </span>period <span class="op">+</span><span class="st"> </span>size <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>herd), <span class="dt">data=</span>cbpp,
-    <span class="dt">family=</span>binomial)
-<span class="kw">doTest</span>(gm2, <span class="kw">fixed</span>(<span class="st">&quot;size&quot;</span>, <span class="st">&quot;z&quot;</span>))</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">gm2 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw">cbind</span>(incidence, size <span class="op">-</span><span class="st"> </span>incidence) <span class="op">~</span><span class="st"> </span>period <span class="op">+</span><span class="st"> </span>size <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>herd), <span class="dt">data=</span>cbpp,</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">    <span class="dt">family=</span>binomial)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">doTest</span>(gm2, <span class="kw">fixed</span>(<span class="st">&quot;size&quot;</span>, <span class="st">&quot;z&quot;</span>))</a></code></pre></div>
 <pre><code>## p-value for predictor 'size': 0.8633872
 ##           --------------------
 ## Test: z-test
 ##       Effect size for size is 0.0045</code></pre>
 <p>Once you have chosen your tests, you can run a power analysis by replacing <code>doTest</code> with <code>powerSim</code>. Don’t forget to specify an appropriate effect size.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fixef</span>(gm2)[<span class="st">&quot;size&quot;</span>] &lt;-<span class="st"> </span><span class="fl">0.05</span>
-<span class="kw">powerSim</span>(gm2, <span class="kw">fixed</span>(<span class="st">&quot;size&quot;</span>, <span class="st">&quot;z&quot;</span>), <span class="dt">nsim=</span><span class="dv">50</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">fixef</span>(gm2)[<span class="st">&quot;size&quot;</span>] &lt;-<span class="st"> </span><span class="fl">0.05</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">powerSim</span>(gm2, <span class="kw">fixed</span>(<span class="st">&quot;size&quot;</span>, <span class="st">&quot;z&quot;</span>), <span class="dt">nsim=</span><span class="dv">50</span>)</a></code></pre></div>
 <pre><code>## Power for predictor 'size', (95% confidence interval):
-##       14.00% ( 5.82, 26.74)
+##       52.00% (37.42, 66.34)
 ## 
 ## Test: z-test
 ##       Effect size for size is 0.050
 ## 
-## Based on 50 simulations, (22 warnings, 0 errors)
-## alpha = 0.05, nrow = 56
+## Based on 50 simulations, (0 warnings, 0 errors)
+## alpha = 0.05, nrow = 112
 ## 
-## Time elapsed: 0 h 0 m 15 s</code></pre>
+## Time elapsed: 0 h 0 m 7 s</code></pre>
 </div>
 <div id="models-with-interaction-or-quadratic-terms" class="section level2">
 <h2>Models with interaction or quadratic terms</h2>
@@ -124,23 +334,23 @@ gm1 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw"
 <div id="cake" class="section level3">
 <h3>Cake</h3>
 <p>This example uses the <code>cake</code> dataset.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fm1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(angle <span class="op">~</span><span class="st"> </span>recipe <span class="op">*</span><span class="st"> </span>temp <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>recipe<span class="op">:</span>replicate), <span class="dt">data=</span>cake, <span class="dt">REML=</span><span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">fm1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(angle <span class="op">~</span><span class="st"> </span>recipe <span class="op">*</span><span class="st"> </span>temp <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>recipe<span class="op">:</span>replicate), <span class="dt">data=</span>cake, <span class="dt">REML=</span><span class="ot">FALSE</span>)</a></code></pre></div>
 <p>Main effects should not be tested when they appear in an interaction term. Using the <code>fcompare</code> function, we can specify a comparison with a simpler model (without having to re-type the random effects specification).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm1, <span class="kw">fcompare</span>(<span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span>temp))</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">doTest</span>(fm1, <span class="kw">fcompare</span>(<span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span>temp))</a></code></pre></div>
 <pre><code>## p-value for model comparison: 0.9586321
 ##           --------------------
 ## Test: Likelihood ratio
 ##       Comparison to ~recipe + temp + [re]</code></pre>
 <p>This also works for polynomial terms:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fm2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(angle <span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span><span class="kw">poly</span>(temp, <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>recipe<span class="op">:</span>replicate), <span class="dt">data=</span>cake, <span class="dt">REML=</span><span class="ot">FALSE</span>)
-<span class="kw">summary</span>(fm2)<span class="op">$</span>coef</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">fm2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(angle <span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span><span class="kw">poly</span>(temp, <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>recipe<span class="op">:</span>replicate), <span class="dt">data=</span>cake, <span class="dt">REML=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="kw">summary</span>(fm2)<span class="op">$</span>coef</a></code></pre></div>
 <pre><code>##                 Estimate Std. Error    t value
 ## (Intercept)    33.122222   1.677940 19.7398077
 ## recipeB        -1.477778   2.372966 -0.6227555
 ## recipeC        -1.522222   2.372966 -0.6414850
 ## poly(temp, 2)1 44.347549   4.537142  9.7743351
 ## poly(temp, 2)2 -2.586135   4.537142 -0.5699921</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm2, <span class="kw">fcompare</span>(<span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span>temp))</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">doTest</span>(fm2, <span class="kw">fcompare</span>(<span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span>temp))</a></code></pre></div>
 <pre><code>## p-value for model comparison: 0.5688225
 ##           --------------------
 ## Test: Likelihood ratio
@@ -149,73 +359,71 @@ gm1 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw"
 <div id="budworms" class="section level3">
 <h3>Budworms</h3>
 <p>We can do similar things with the <code>budworm</code> data in the <code>pbkrtest</code> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(budworm, <span class="dt">package=</span><span class="st">&quot;pbkrtest&quot;</span>)
-bw1 &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="kw">cbind</span>(ndead, ntotal<span class="op">-</span>ndead) <span class="op">~</span><span class="st"> </span>dose<span class="op">*</span>sex, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="dt">data=</span>budworm)
-<span class="kw">summary</span>(bw1)<span class="op">$</span>coef</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">data</span>(budworm, <span class="dt">package=</span><span class="st">&quot;pbkrtest&quot;</span>)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">bw1 &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="kw">cbind</span>(ndead, ntotal<span class="op">-</span>ndead) <span class="op">~</span><span class="st"> </span>dose<span class="op">*</span>sex, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="dt">data=</span>budworm)</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="kw">summary</span>(bw1)<span class="op">$</span>coef</a></code></pre></div>
 <pre><code>##                Estimate Std. Error    z value     Pr(&gt;|z|)
 ## (Intercept)  -1.7157796 0.32233098 -5.3230368 1.020491e-07
 ## dose          0.1156765 0.02378865  4.8626745 1.158102e-06
 ## sexmale      -0.2119351 0.51523286 -0.4113384 6.808244e-01
 ## dose:sexmale  0.1815579 0.06691613  2.7132151 6.663383e-03</code></pre>
 <p>Of course we don’t want to retype the <code>cbind</code> boilerplate:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(bw1, <span class="kw">compare</span>(. <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>sex))</code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">doTest</span>(bw1, <span class="kw">compare</span>(. <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>sex))</a></code></pre></div>
 <pre><code>## p-value for model comparison: 0.001741539
 ##           --------------------
 ## Test: Likelihood ratio
 ##       Comparison to . ~ dose + sex</code></pre>
 <p>Since <code>dose</code> is continous and <code>sex</code> is binary we could also use a Z-test on the single interaction term.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(bw1, <span class="kw">fixed</span>(<span class="st">&quot;dose:sexmale&quot;</span>, <span class="st">&quot;z&quot;</span>))</code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">doTest</span>(bw1, <span class="kw">fixed</span>(<span class="st">&quot;dose:sexmale&quot;</span>, <span class="st">&quot;z&quot;</span>))</a></code></pre></div>
 <pre><code>## p-value for predictor 'dose:sexmale': 0.006663383
 ##           --------------------
-## Test: z-test
-##       Effect size for dose:sexmale is 0.18</code></pre>
+## Test: z-test</code></pre>
 </div>
 </div>
 <div id="single-random-effects" class="section level2">
 <h2>Single random effects</h2>
 <p>The <code>random</code> function gives you access to tests from the <code>RLRsim</code> package. No additional arguments are needed for a single random effect.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">re1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Yield <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>Batch, <span class="dt">data=</span>Dyestuff)
-<span class="kw">doTest</span>(re1, <span class="kw">random</span>())</code></pre></div>
-<pre><code>## p-value for a single random effect: 0.0048
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">re1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Yield <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>Batch, <span class="dt">data=</span>Dyestuff)</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="kw">doTest</span>(re1, <span class="kw">random</span>())</a></code></pre></div>
+<pre><code>## p-value for a single random effect: 0.0052
 ##           --------------------
 ## Test: Exact restricted LRT (package RLRsim)</code></pre>
 </div>
 <div id="multiple-random-effects" class="section level2">
 <h2>Multiple random effects</h2>
 <p>Where the model has multiple random effects, <code>compare</code> can be used to test alternative specifications.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fm1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(Days <span class="op">|</span><span class="st"> </span>Subject), <span class="dt">data=</span>sleepstudy)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm1, <span class="kw">compare</span>( <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject)))</code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">fm1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(Days <span class="op">|</span><span class="st"> </span>Subject), <span class="dt">data=</span>sleepstudy)</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">doTest</span>(fm1, <span class="kw">compare</span>( <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject)))</a></code></pre></div>
 <pre><code>## p-value for model comparison: 7.072413e-10
 ##           --------------------
 ## Test: Likelihood ratio
 ##       Comparison to ~Days + (1 | Subject)</code></pre>
-<p>The LRT is fast but only approximate. In fact, when testing random effects, the test is conservative<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> because the null hypothesis is at a boundary of the parameter space. This means that you will underestimate power if you use the LRT. For more accurate results you can use <code>compare</code> with a parametric bootstrap test from the <code>pbkrtest</code> package. These can be quite slow, so you may want to use the LRT to exploring designs, and then double check with the parametric bootstrap.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm1, <span class="kw">compare</span>( <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject), <span class="st">&quot;pb&quot;</span>))</code></pre></div>
+<p>The LRT is fast but only approximate. In fact, when testing random effects, the test is conservative<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> because the null hypothesis is at a boundary of the parameter space. This means that you will underestimate power if you use the LRT. For more accurate results you can use <code>compare</code> with a parametric bootstrap test from the <code>pbkrtest</code> package. These can be quite slow, so you may want to use the LRT to exploring designs, and then double check with the parametric bootstrap.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">doTest</span>(fm1, <span class="kw">compare</span>( <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject), <span class="st">&quot;pb&quot;</span>))</a></code></pre></div>
 <p>Note that the shortcut <code>rcompare</code> saves you from retyping the fixed effect specification.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">doTest</span>(fm1, <span class="kw">rcompare</span>( <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject), <span class="st">&quot;pb&quot;</span>))</code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">doTest</span>(fm1, <span class="kw">rcompare</span>( <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject), <span class="st">&quot;pb&quot;</span>))</a></code></pre></div>
 </div>
 <div id="a-note-about-errors-during-simulation" class="section level2">
 <h2>A note about errors during simulation</h2>
 <p>During a simulation study, some iterations may fail due to some sort of error. When this happens, <code>simr</code> treats that iteration as a failed (i.e. not significant) test. In the following example there are 50 simulations, with 14 successes, 34 failures, and 2 non-results. The power is calculated as 14/50, i.e. 28%:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binFit &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> <span class="kw">cbind</span>(z, <span class="dv">10</span> <span class="op">-</span><span class="st"> </span>z) <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>g, <span class="dt">family =</span> binomial, <span class="dt">data =</span> simdata)
-
-poisSim &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> z <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>g, <span class="dt">family =</span> poisson, <span class="dt">data =</span> simdata)
-<span class="kw">coef</span>(poisSim)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="op">-</span><span class="fl">0.05</span>)
-
-<span class="kw">powerSim</span>(binFit, <span class="dt">sim=</span>poisSim, <span class="dt">nsim=</span><span class="dv">50</span>, <span class="dt">seed=</span><span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">binFit &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> <span class="kw">cbind</span>(z, <span class="dv">10</span> <span class="op">-</span><span class="st"> </span>z) <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>g, <span class="dt">family =</span> binomial, <span class="dt">data =</span> simdata)</a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3">poisSim &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> z <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>g, <span class="dt">family =</span> poisson, <span class="dt">data =</span> simdata)</a>
+<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="kw">coef</span>(poisSim)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">-0.05</span>)</a>
+<a class="sourceLine" id="cb32-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb32-6" data-line-number="6"><span class="kw">powerSim</span>(binFit, <span class="dt">sim=</span>poisSim, <span class="dt">nsim=</span><span class="dv">50</span>, <span class="dt">seed=</span><span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## Power for predictor 'x', (95% confidence interval):
 ##       28.00% (16.23, 42.49)
 ## 
 ## Test: z-test
-##       Effect size for x is -0.050
 ## 
 ## Based on 50 simulations, (0 warnings, 2 errors)
 ## alpha = 0.05, nrow = 30
 ## 
 ## Time elapsed: 0 h 0 m 0 s</code></pre>
 <p>Rather than interrupting part-way through an analysis, <code>simr</code> traps and logs errors and warnings. You can access these logs using <code>$warnings</code> and <code>$errors</code>. If you didn’t assign your analysis to a variable, you can recover it with the <code>lastResult</code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ps &lt;-<span class="st"> </span><span class="kw">lastResult</span>()
-ps<span class="op">$</span>errors</code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">ps &lt;-<span class="st"> </span><span class="kw">lastResult</span>()</a>
+<a class="sourceLine" id="cb34-2" data-line-number="2">ps<span class="op">$</span>errors</a></code></pre></div>
 <pre><code>##     stage index                           message
 ## 1 Fitting    14 Value 1.04545 out of range (0, 1)
 ## 2 Fitting    33 Value 1.13636 out of range (0, 1)</code></pre>
@@ -223,7 +431,7 @@ ps<span class="op">$</span>errors</code></pre></div>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>See, e.g., Pinheiro, J.C., Bates D.M. (2000) <em>Mixed-Effects Models in S and S-PLUS</em>, Springer, New York (p84).<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>See, e.g., Pinheiro, J.C., Bates D.M. (2000) <em>Mixed-Effects Models in S and S-PLUS</em>, Springer, New York (p84).<a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
 
