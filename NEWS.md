@@ -1,4 +1,11 @@
-### sim 1.0.4
+### simr (development)
+
+ - fixed a unit test that was causing problems for lme4 downstream checks.
+
+ - minor improvements
+     - include `nrow` in `summary.powerCurve`.
+
+### simr 1.0.4
 
  - compatibility updates for `lmerTest` version 3.0-0.
 

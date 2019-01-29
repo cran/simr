@@ -297,36 +297,37 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## period4     -1.866248  0.5935804 -3.144052 1.666258e-03</code></pre>
 <p>Note that <code>period</code> is a categorical variable with 4 levels, which enters the model as 3 dummy variables. To test all 3 dummy variables simultaneously, you can use a likelihood ratio test.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">doTest</span>(gm1, <span class="kw">fixed</span>(<span class="st">&quot;period&quot;</span>, <span class="st">&quot;lr&quot;</span>))</a></code></pre></div>
+<pre><code>## singular fit</code></pre>
 <pre><code>## p-value for predictor 'period': 0.003150249
 ##           --------------------
 ## Test: Likelihood ratio</code></pre>
 <p>If you were (for some reason) especially interested in the significance for the dummy variable <code>period2</code> you could use a z-test. This test uses the value <code>Pr(&gt;|z|)</code> reported in the summary above.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">doTest</span>(gm1, <span class="kw">fixed</span>(<span class="st">&quot;period2&quot;</span>, <span class="st">&quot;z&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">doTest</span>(gm1, <span class="kw">fixed</span>(<span class="st">&quot;period2&quot;</span>, <span class="st">&quot;z&quot;</span>))</a></code></pre></div>
 <pre><code>## p-value for predictor 'period2': 0.01066033
 ##           --------------------
 ## Test: z-test
 ##       Effect size for period2 is -1.2</code></pre>
 <p>Suppose your model also has a continuous predictor. You can use <code>fixed</code> to choose which fixed effect to apply tests to.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">gm2 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw">cbind</span>(incidence, size <span class="op">-</span><span class="st"> </span>incidence) <span class="op">~</span><span class="st"> </span>period <span class="op">+</span><span class="st"> </span>size <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>herd), <span class="dt">data=</span>cbpp,</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">    <span class="dt">family=</span>binomial)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">doTest</span>(gm2, <span class="kw">fixed</span>(<span class="st">&quot;size&quot;</span>, <span class="st">&quot;z&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">gm2 &lt;-<span class="st"> </span><span class="kw">glmer</span>(<span class="kw">cbind</span>(incidence, size <span class="op">-</span><span class="st"> </span>incidence) <span class="op">~</span><span class="st"> </span>period <span class="op">+</span><span class="st"> </span>size <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>herd), <span class="dt">data=</span>cbpp,</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">    <span class="dt">family=</span>binomial)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">doTest</span>(gm2, <span class="kw">fixed</span>(<span class="st">&quot;size&quot;</span>, <span class="st">&quot;z&quot;</span>))</a></code></pre></div>
 <pre><code>## p-value for predictor 'size': 0.8633872
 ##           --------------------
 ## Test: z-test
 ##       Effect size for size is 0.0045</code></pre>
 <p>Once you have chosen your tests, you can run a power analysis by replacing <code>doTest</code> with <code>powerSim</code>. Don’t forget to specify an appropriate effect size.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">fixef</span>(gm2)[<span class="st">&quot;size&quot;</span>] &lt;-<span class="st"> </span><span class="fl">0.05</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">powerSim</span>(gm2, <span class="kw">fixed</span>(<span class="st">&quot;size&quot;</span>, <span class="st">&quot;z&quot;</span>), <span class="dt">nsim=</span><span class="dv">50</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">fixef</span>(gm2)[<span class="st">&quot;size&quot;</span>] &lt;-<span class="st"> </span><span class="fl">0.05</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw">powerSim</span>(gm2, <span class="kw">fixed</span>(<span class="st">&quot;size&quot;</span>, <span class="st">&quot;z&quot;</span>), <span class="dt">nsim=</span><span class="dv">50</span>)</a></code></pre></div>
 <pre><code>## Power for predictor 'size', (95% confidence interval):
-##       52.00% (37.42, 66.34)
+##       62.00% (47.17, 75.35)
 ## 
 ## Test: z-test
 ##       Effect size for size is 0.050
 ## 
-## Based on 50 simulations, (0 warnings, 0 errors)
+## Based on 50 simulations, (3 warnings, 0 errors)
 ## alpha = 0.05, nrow = 112
 ## 
-## Time elapsed: 0 h 0 m 7 s</code></pre>
+## Time elapsed: 0 h 0 m 8 s</code></pre>
 </div>
 <div id="models-with-interaction-or-quadratic-terms" class="section level2">
 <h2>Models with interaction or quadratic terms</h2>
@@ -334,23 +335,23 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="cake" class="section level3">
 <h3>Cake</h3>
 <p>This example uses the <code>cake</code> dataset.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">fm1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(angle <span class="op">~</span><span class="st"> </span>recipe <span class="op">*</span><span class="st"> </span>temp <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>recipe<span class="op">:</span>replicate), <span class="dt">data=</span>cake, <span class="dt">REML=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">fm1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(angle <span class="op">~</span><span class="st"> </span>recipe <span class="op">*</span><span class="st"> </span>temp <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>recipe<span class="op">:</span>replicate), <span class="dt">data=</span>cake, <span class="dt">REML=</span><span class="ot">FALSE</span>)</a></code></pre></div>
 <p>Main effects should not be tested when they appear in an interaction term. Using the <code>fcompare</code> function, we can specify a comparison with a simpler model (without having to re-type the random effects specification).</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">doTest</span>(fm1, <span class="kw">fcompare</span>(<span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span>temp))</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">doTest</span>(fm1, <span class="kw">fcompare</span>(<span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span>temp))</a></code></pre></div>
 <pre><code>## p-value for model comparison: 0.9586321
 ##           --------------------
 ## Test: Likelihood ratio
 ##       Comparison to ~recipe + temp + [re]</code></pre>
 <p>This also works for polynomial terms:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">fm2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(angle <span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span><span class="kw">poly</span>(temp, <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>recipe<span class="op">:</span>replicate), <span class="dt">data=</span>cake, <span class="dt">REML=</span><span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="kw">summary</span>(fm2)<span class="op">$</span>coef</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">fm2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(angle <span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span><span class="kw">poly</span>(temp, <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>recipe<span class="op">:</span>replicate), <span class="dt">data=</span>cake, <span class="dt">REML=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="kw">summary</span>(fm2)<span class="op">$</span>coef</a></code></pre></div>
 <pre><code>##                 Estimate Std. Error    t value
-## (Intercept)    33.122222   1.677940 19.7398077
+## (Intercept)    33.122222   1.677940 19.7398074
 ## recipeB        -1.477778   2.372966 -0.6227555
 ## recipeC        -1.522222   2.372966 -0.6414850
 ## poly(temp, 2)1 44.347549   4.537142  9.7743351
 ## poly(temp, 2)2 -2.586135   4.537142 -0.5699921</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">doTest</span>(fm2, <span class="kw">fcompare</span>(<span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span>temp))</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">doTest</span>(fm2, <span class="kw">fcompare</span>(<span class="op">~</span><span class="st"> </span>recipe <span class="op">+</span><span class="st"> </span>temp))</a></code></pre></div>
 <pre><code>## p-value for model comparison: 0.5688225
 ##           --------------------
 ## Test: Likelihood ratio
@@ -359,22 +360,22 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="budworms" class="section level3">
 <h3>Budworms</h3>
 <p>We can do similar things with the <code>budworm</code> data in the <code>pbkrtest</code> package.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">data</span>(budworm, <span class="dt">package=</span><span class="st">&quot;pbkrtest&quot;</span>)</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">bw1 &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="kw">cbind</span>(ndead, ntotal<span class="op">-</span>ndead) <span class="op">~</span><span class="st"> </span>dose<span class="op">*</span>sex, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="dt">data=</span>budworm)</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="kw">summary</span>(bw1)<span class="op">$</span>coef</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">data</span>(budworm, <span class="dt">package=</span><span class="st">&quot;pbkrtest&quot;</span>)</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">bw1 &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="kw">cbind</span>(ndead, ntotal<span class="op">-</span>ndead) <span class="op">~</span><span class="st"> </span>dose<span class="op">*</span>sex, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="dt">data=</span>budworm)</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="kw">summary</span>(bw1)<span class="op">$</span>coef</a></code></pre></div>
 <pre><code>##                Estimate Std. Error    z value     Pr(&gt;|z|)
 ## (Intercept)  -1.7157796 0.32233098 -5.3230368 1.020491e-07
 ## dose          0.1156765 0.02378865  4.8626745 1.158102e-06
 ## sexmale      -0.2119351 0.51523286 -0.4113384 6.808244e-01
 ## dose:sexmale  0.1815579 0.06691613  2.7132151 6.663383e-03</code></pre>
 <p>Of course we don’t want to retype the <code>cbind</code> boilerplate:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">doTest</span>(bw1, <span class="kw">compare</span>(. <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>sex))</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">doTest</span>(bw1, <span class="kw">compare</span>(. <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>sex))</a></code></pre></div>
 <pre><code>## p-value for model comparison: 0.001741539
 ##           --------------------
 ## Test: Likelihood ratio
 ##       Comparison to . ~ dose + sex</code></pre>
 <p>Since <code>dose</code> is continous and <code>sex</code> is binary we could also use a Z-test on the single interaction term.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">doTest</span>(bw1, <span class="kw">fixed</span>(<span class="st">&quot;dose:sexmale&quot;</span>, <span class="st">&quot;z&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">doTest</span>(bw1, <span class="kw">fixed</span>(<span class="st">&quot;dose:sexmale&quot;</span>, <span class="st">&quot;z&quot;</span>))</a></code></pre></div>
 <pre><code>## p-value for predictor 'dose:sexmale': 0.006663383
 ##           --------------------
 ## Test: z-test</code></pre>
@@ -383,35 +384,35 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="single-random-effects" class="section level2">
 <h2>Single random effects</h2>
 <p>The <code>random</code> function gives you access to tests from the <code>RLRsim</code> package. No additional arguments are needed for a single random effect.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">re1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Yield <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>Batch, <span class="dt">data=</span>Dyestuff)</a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="kw">doTest</span>(re1, <span class="kw">random</span>())</a></code></pre></div>
-<pre><code>## p-value for a single random effect: 0.0052
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">re1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Yield <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>Batch, <span class="dt">data=</span>Dyestuff)</a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="kw">doTest</span>(re1, <span class="kw">random</span>())</a></code></pre></div>
+<pre><code>## p-value for a single random effect: 0.0047
 ##           --------------------
 ## Test: Exact restricted LRT (package RLRsim)</code></pre>
 </div>
 <div id="multiple-random-effects" class="section level2">
 <h2>Multiple random effects</h2>
 <p>Where the model has multiple random effects, <code>compare</code> can be used to test alternative specifications.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">fm1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(Days <span class="op">|</span><span class="st"> </span>Subject), <span class="dt">data=</span>sleepstudy)</a></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">doTest</span>(fm1, <span class="kw">compare</span>( <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject)))</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">fm1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(Days <span class="op">|</span><span class="st"> </span>Subject), <span class="dt">data=</span>sleepstudy)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">doTest</span>(fm1, <span class="kw">compare</span>( <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject)))</a></code></pre></div>
 <pre><code>## p-value for model comparison: 7.072413e-10
 ##           --------------------
 ## Test: Likelihood ratio
 ##       Comparison to ~Days + (1 | Subject)</code></pre>
 <p>The LRT is fast but only approximate. In fact, when testing random effects, the test is conservative<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> because the null hypothesis is at a boundary of the parameter space. This means that you will underestimate power if you use the LRT. For more accurate results you can use <code>compare</code> with a parametric bootstrap test from the <code>pbkrtest</code> package. These can be quite slow, so you may want to use the LRT to exploring designs, and then double check with the parametric bootstrap.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">doTest</span>(fm1, <span class="kw">compare</span>( <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject), <span class="st">&quot;pb&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">doTest</span>(fm1, <span class="kw">compare</span>( <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject), <span class="st">&quot;pb&quot;</span>))</a></code></pre></div>
 <p>Note that the shortcut <code>rcompare</code> saves you from retyping the fixed effect specification.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">doTest</span>(fm1, <span class="kw">rcompare</span>( <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject), <span class="st">&quot;pb&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">doTest</span>(fm1, <span class="kw">rcompare</span>( <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject), <span class="st">&quot;pb&quot;</span>))</a></code></pre></div>
 </div>
 <div id="a-note-about-errors-during-simulation" class="section level2">
 <h2>A note about errors during simulation</h2>
 <p>During a simulation study, some iterations may fail due to some sort of error. When this happens, <code>simr</code> treats that iteration as a failed (i.e. not significant) test. In the following example there are 50 simulations, with 14 successes, 34 failures, and 2 non-results. The power is calculated as 14/50, i.e. 28%:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">binFit &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> <span class="kw">cbind</span>(z, <span class="dv">10</span> <span class="op">-</span><span class="st"> </span>z) <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>g, <span class="dt">family =</span> binomial, <span class="dt">data =</span> simdata)</a>
-<a class="sourceLine" id="cb32-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb32-3" data-line-number="3">poisSim &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> z <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>g, <span class="dt">family =</span> poisson, <span class="dt">data =</span> simdata)</a>
-<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="kw">coef</span>(poisSim)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">-0.05</span>)</a>
-<a class="sourceLine" id="cb32-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb32-6" data-line-number="6"><span class="kw">powerSim</span>(binFit, <span class="dt">sim=</span>poisSim, <span class="dt">nsim=</span><span class="dv">50</span>, <span class="dt">seed=</span><span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">binFit &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> <span class="kw">cbind</span>(z, <span class="dv">10</span> <span class="op">-</span><span class="st"> </span>z) <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>g, <span class="dt">family =</span> binomial, <span class="dt">data =</span> simdata)</a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb33-3" data-line-number="3">poisSim &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> z <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>g, <span class="dt">family =</span> poisson, <span class="dt">data =</span> simdata)</a>
+<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="kw">coef</span>(poisSim)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">-0.05</span>)</a>
+<a class="sourceLine" id="cb33-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="kw">powerSim</span>(binFit, <span class="dt">sim=</span>poisSim, <span class="dt">nsim=</span><span class="dv">50</span>, <span class="dt">seed=</span><span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## Power for predictor 'x', (95% confidence interval):
 ##       28.00% (16.23, 42.49)
 ## 
@@ -422,8 +423,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## 
 ## Time elapsed: 0 h 0 m 0 s</code></pre>
 <p>Rather than interrupting part-way through an analysis, <code>simr</code> traps and logs errors and warnings. You can access these logs using <code>$warnings</code> and <code>$errors</code>. If you didn’t assign your analysis to a variable, you can recover it with the <code>lastResult</code> function.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">ps &lt;-<span class="st"> </span><span class="kw">lastResult</span>()</a>
-<a class="sourceLine" id="cb34-2" data-line-number="2">ps<span class="op">$</span>errors</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">ps &lt;-<span class="st"> </span><span class="kw">lastResult</span>()</a>
+<a class="sourceLine" id="cb35-2" data-line-number="2">ps<span class="op">$</span>errors</a></code></pre></div>
 <pre><code>##     stage index                           message
 ## 1 Fitting    14 Value 1.04545 out of range (0, 1)
 ## 2 Fitting    33 Value 1.13636 out of range (0, 1)</code></pre>

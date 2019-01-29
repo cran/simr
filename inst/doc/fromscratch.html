@@ -303,7 +303,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <pre><code>## Linear mixed model fit by REML ['lmerMod']
 ## Formula: y ~ x + (1 | g)
 ##    Data: X
-## REML criterion at convergence: 92.7739
+## REML criterion at convergence: 95.0003
 ## Random effects:
 ##  Groups   Name        Std.Dev.
 ##  g        (Intercept) 0.7071  
@@ -320,7 +320,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## Formula: z ~ x + (x | g)
 ##    Data: X
 ##      AIC      BIC   logLik deviance df.resid 
-## 184.0642 191.0702 -87.0321 174.0642       25 
+## 206.3039 213.3099 -98.1520 196.3039       25 
 ## Random effects:
 ##  Groups Name        Std.Dev. Corr
 ##  g      (Intercept) 0.7071       
@@ -334,6 +334,12 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <h3>Start the power analysis</h3>
 <p>Now we have “pilot” models, which can be used with <code>simr</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">powerSim</span>(model1, <span class="dt">nsim=</span><span class="dv">20</span>)</a></code></pre></div>
+<pre><code>## singular fit
+## singular fit
+## singular fit
+## singular fit
+## singular fit
+## singular fit</code></pre>
 <pre><code>## Power for predictor 'x', (95% confidence interval):
 ##       30.00% (11.89, 54.28)
 ## 
@@ -343,15 +349,31 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## Based on 20 simulations, (0 warnings, 0 errors)
 ## alpha = 0.05, nrow = 30
 ## 
-## Time elapsed: 0 h 0 m 2 s</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">powerSim</span>(model2, <span class="dt">nsim=</span><span class="dv">20</span>)</a></code></pre></div>
+## Time elapsed: 0 h 0 m 1 s</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">powerSim</span>(model2, <span class="dt">nsim=</span><span class="dv">20</span>)</a></code></pre></div>
+<pre><code>## singular fit
+## singular fit
+## singular fit
+## singular fit
+## singular fit
+## singular fit
+## singular fit
+## singular fit
+## singular fit
+## singular fit
+## singular fit
+## singular fit
+## singular fit
+## singular fit
+## singular fit
+## singular fit</code></pre>
 <pre><code>## Power for predictor 'x', (95% confidence interval):
 ##       35.00% (15.39, 59.22)
 ## 
 ## Test: z-test
 ##       Effect size for x is -0.10
 ## 
-## Based on 20 simulations, (2 warnings, 0 errors)
+## Based on 20 simulations, (0 warnings, 0 errors)
 ## alpha = 0.05, nrow = 30
 ## 
 ## Time elapsed: 0 h 0 m 2 s</code></pre>
